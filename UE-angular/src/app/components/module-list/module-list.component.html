@@ -1,0 +1,11 @@
+<div *ngIf="loading">Chargement...</div>
+<div *ngIf="error">{{ error }}</div>
+<ul *ngIf="!loading && !error">
+  <li *ngFor="let module of modules">
+    <strong>{{ module.nom }}</strong> (Matricule: {{ module.matricule }})<br>
+    Coefficient: {{ module.coefficient }}<br>
+    Volume Horaire: {{ module.volumeHoraire }}<br>
+    Type: {{ module.type }}<br>
+    UE: {{ module.uniteEnseignement?.domaine }}
+  </li>
+</ul>

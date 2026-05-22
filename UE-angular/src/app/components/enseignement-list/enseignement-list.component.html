@@ -1,0 +1,10 @@
+<div *ngIf="loading">Chargement...</div>
+<div *ngIf="error">{{ error }}</div>
+<ul *ngIf="!loading && !error">
+  <li *ngFor="let ue of unites">
+    <strong>{{ ue.domaine }}</strong> (Code: {{ ue.code }})<br>
+    Responsable: {{ ue.responsable }}<br>
+    Crédits: {{ ue.credits }}<br>
+    Semestre: {{ ue.semestre }}
+  </li>
+</ul>
