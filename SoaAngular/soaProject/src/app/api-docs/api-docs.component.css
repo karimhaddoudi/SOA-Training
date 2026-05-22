@@ -1,0 +1,85 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #f8fafc;
+}
+
+.api-docs {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.api-header {
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
+  color: #f8fafc;
+  padding: 24px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.12);
+}
+
+.api-brand {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  max-width: 1120px;
+  margin: 0 auto;
+}
+
+.api-icon {
+  font-size: 2.4rem;
+}
+
+.api-header h1 {
+  margin: 0 0 6px;
+  font-size: 1.9rem;
+}
+
+.api-header p {
+  margin: 0;
+  color: #dbeafe;
+  font-size: 0.98rem;
+}
+
+.api-content {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 24px;
+}
+
+#swagger-ui {
+  background: white;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
+}
+
+/* Override Swagger UI styles */
+#swagger-ui .topbar {
+  display: none;
+}
+
+#swagger-ui .scheme-container {
+  background: transparent;
+  padding: 0;
+}
+
+@media (max-width: 720px) {
+  .api-header {
+    padding: 18px;
+  }
+
+  .api-brand {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .api-content {
+    padding: 16px;
+  }
+
+  #swagger-ui {
+    padding: 16px;
+  }
+}

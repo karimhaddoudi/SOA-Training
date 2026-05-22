@@ -1,0 +1,45 @@
+<section class="ue-edit-card">
+  <div class="ue-add-head">
+    <div>
+      <p class="card-label">Modifier une unité</p>
+      <h2>Mettre à jour l'unité d'enseignement</h2>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="status">Chargement de l'UE...</div>
+  <div *ngIf="error" class="status error">{{ error }}</div>
+
+  <form *ngIf="!isLoading && !error" (ngSubmit)="updateUE()" class="ue-add-form">
+    <div class="form-row">
+      <label>Code</label>
+      <input type="number" [(ngModel)]="ue.code" name="code" required min="1" disabled />
+    </div>
+
+    <div class="form-row">
+      <label>Domaine</label>
+      <input type="text" [(ngModel)]="ue.domaine" name="domaine" required />
+    </div>
+
+    <div class="form-row">
+      <label>Responsable</label>
+      <input type="text" [(ngModel)]="ue.responsable" name="responsable" required />
+    </div>
+
+    <div class="form-row two-columns">
+      <div>
+        <label>Crédits</label>
+        <input type="number" [(ngModel)]="ue.credits" name="credits" required min="1" />
+      </div>
+      <div>
+        <label>Semestre</label>
+        <input type="number" [(ngModel)]="ue.semestre" name="semestre" required min="1" max="2" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="isSubmitting" class="save-button">
+        {{ isSubmitting ? 'Enregistrement...' : 'Mettre à jour' }}
+      </button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,51 @@
+<section class="module-list">
+  <div class="module-list-header">
+    <div>
+      <p class="section-label">Gestion des modules</p>
+      <h2>Liste des modules</h2>
+      <p class="section-description">Voir, modifier et supprimer les modules liés aux unités d’enseignement.</p>
+    </div>
+    <button type="button" class="refresh-button" (click)="loadAll()">Rafraîchir</button>
+  </div>
+
+  <div *ngIf="isLoading" class="status">Chargement...</div>
+  <div *ngIf="error" class="status error">{{ error }}</div>
+
+  <div *ngIf="!isLoading && modules.length > 0" class="cards">
+    <article *ngFor="let module of modules" class="module-card">
+      <div class="module-card-head">
+        <div>
+          <span class="module-badge">{{ module.matricule }}</span>
+          <h3>{{ module.nom }}</h3>
+        </div>
+        <div class="card-actions">
+          <button type="button" class="edit-button" (click)="editModule(module.matricule)">Modifier</button>
+          <button type="button" class="delete-button" (click)="deleteModule(module.matricule)">Supprimer</button>
+        </div>
+      </div>
+
+      <div class="module-details">
+        <div>
+          <span>Type</span>
+          <p>{{ module.type }}</p>
+        </div>
+        <div>
+          <span>Coefficient</span>
+          <p>{{ module.coefficient }}</p>
+        </div>
+        <div>
+          <span>Volume horaire</span>
+          <p>{{ module.volumeHoraire }}</p>
+        </div>
+        <div *ngIf="module.uniteEnseignement">
+          <span>Unité d’enseignement</span>
+          <p>{{ module.uniteEnseignement.domaine }} (UE {{ module.uniteEnseignement.code }})</p>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div *ngIf="!isLoading && modules.length === 0" class="empty-state">
+    <p>Aucun module disponible.</p>
+  </div>
+</section>

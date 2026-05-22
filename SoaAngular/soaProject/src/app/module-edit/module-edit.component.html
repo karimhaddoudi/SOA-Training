@@ -1,0 +1,55 @@
+<section class="module-add-card">
+  <div class="module-add-head">
+    <div>
+      <p class="card-label">Modifier le module</p>
+      <h2>Mettre à jour les informations</h2>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="status">Chargement du module...</div>
+  <div *ngIf="error" class="status error">{{ error }}</div>
+
+  <form *ngIf="!isLoading && !error" class="module-add-form" (ngSubmit)="updateModule()">
+    <div class="form-row">
+      <label>Matricule</label>
+      <input type="text" [(ngModel)]="module.matricule" name="matricule" disabled />
+    </div>
+
+    <div class="form-row">
+      <label>Nom</label>
+      <input type="text" [(ngModel)]="module.nom" name="nom" required />
+    </div>
+
+    <div class="form-row two-columns">
+      <div>
+        <label>Coefficient</label>
+        <input type="number" [(ngModel)]="module.coefficient" name="coefficient" required min="1" />
+      </div>
+      <div>
+        <label>Volume horaire</label>
+        <input type="number" [(ngModel)]="module.volumeHoraire" name="volumeHoraire" required min="1" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Type</label>
+      <select [(ngModel)]="module.type" name="type" required>
+        <option *ngFor="let type of types" [value]="type">{{ type }}</option>
+      </select>
+    </div>
+
+    <div class="form-row">
+      <label>Unité d’enseignement</label>
+      <select [(ngModel)]="module.uniteEnseignement" name="uniteEnseignement" required>
+        <option [ngValue]="undefined" disabled>Choisir une UE</option>
+        <option *ngFor="let ue of ues" [ngValue]="ue">{{ ue.code }} - {{ ue.domaine }}</option>
+      </select>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="isSubmitting" class="save-button">
+        {{ isSubmitting ? 'Mise à jour...' : 'Mettre à jour le module' }}
+      </button>
+    </div>
+  </form>
+</section>

@@ -1,0 +1,69 @@
+<section class="ue-list">
+  <div class="ue-list-header">
+    <div>
+      <p class="section-label">Tableau de bord</p>
+      <h2>Liste des unités d’enseignement</h2>
+      <p class="section-description">Visualisez vos UE, supprimez les éléments obsolètes et gardez le catalogue à jour.</p>
+    </div>
+    <button type="button" (click)="loadAll()" class="refresh-button">Rafraîchir</button>
+  </div>
+
+  <div class="ue-search-bar">
+    <div class="search-row">
+      <div>
+        <label>Code</label>
+        <input type="number" [(ngModel)]="searchCode" placeholder="Ex. 3" />
+      </div>
+      <div>
+        <label>Domaine</label>
+        <input type="text" [(ngModel)]="searchDomaine" placeholder="Ex. Informatique" />
+      </div>
+      <div>
+        <label>Semestre</label>
+        <select [(ngModel)]="searchSemestre">
+          <option [ngValue]="null">Tous</option>
+          <option [ngValue]="1">1</option>
+          <option [ngValue]="2">2</option>
+        </select>
+      </div>
+    </div>
+    <div class="search-actions">
+      <button type="button" class="search-button" (click)="searchUes()">Rechercher</button>
+      <button type="button" class="reset-button" (click)="resetFilters()">Réinitialiser</button>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="status">Chargement...</div>
+  <div *ngIf="error" class="status error">{{ error }}</div>
+
+  <div *ngIf="!isLoading && ues.length > 0" class="cards">
+    <article *ngFor="let ue of ues" class="ue-card">
+      <div class="ue-card-head">
+        <span class="ue-badge">UE {{ ue.code }}</span>
+        <div class="card-actions">
+          <a [routerLink]="['/ue/update', ue.code]" class="update-button">Modifier</a>
+          <button type="button" class="delete-button" (click)="deleteUE(ue.code)">Supprimer</button>
+        </div>
+      </div>
+      <h3>{{ ue.domaine }}</h3>
+      <div class="ue-details">
+        <div>
+          <span>Responsable</span>
+          <p>{{ ue.responsable }}</p>
+        </div>
+        <div>
+          <span>Crédits</span>
+          <p>{{ ue.credits }}</p>
+        </div>
+        <div>
+          <span>Semestre</span>
+          <p>{{ ue.semestre }}</p>
+        </div>
+      </div>
+    </article>
+  </div>
+
+  <div *ngIf="!isLoading && ues.length === 0" class="empty-state">
+    <p>Aucune unité d’enseignement disponible.</p>
+  </div>
+</section>

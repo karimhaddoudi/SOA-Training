@@ -1,0 +1,44 @@
+<section class="ue-add-card">
+  <div class="ue-add-head">
+    <div>
+      <p class="card-label">Ajouter une nouvelle UE</p>
+      <h2>Créer une unité d’enseignement</h2>
+    </div>
+  </div>
+
+  <form (ngSubmit)="addUE()" class="ue-add-form">
+    <div class="form-row">
+      <label>Code</label>
+      <input type="number" [(ngModel)]="newUe.code" name="code" required min="1" />
+    </div>
+
+    <div class="form-row">
+      <label>Domaine</label>
+      <input type="text" [(ngModel)]="newUe.domaine" name="domaine" required />
+    </div>
+
+    <div class="form-row">
+      <label>Responsable</label>
+      <input type="text" [(ngModel)]="newUe.responsable" name="responsable" required />
+    </div>
+
+    <div class="form-row two-columns">
+      <div>
+        <label>Crédits</label>
+        <input type="number" [(ngModel)]="newUe.credits" name="credits" required min="1" />
+      </div>
+      <div>
+        <label>Semestre</label>
+        <input type="number" [(ngModel)]="newUe.semestre" name="semestre" required min="1" max="2" />
+      </div>
+    </div>
+
+    <div class="form-actions">
+      <button type="submit" [disabled]="isSubmitting" class="save-button">
+        {{ isSubmitting ? 'Ajout en cours...' : 'Ajouter la UE' }}
+      </button>
+    </div>
+
+    <div *ngIf="error" class="form-error">{{ error }}</div>
+  </form>
+</section>

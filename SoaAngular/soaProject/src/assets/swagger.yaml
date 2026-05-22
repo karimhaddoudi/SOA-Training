@@ -1,0 +1,260 @@
+openapi: 3.0.0
+info:
+  title: API Gestion UE et Modules
+  description: API REST pour la gestion des unités d'enseignement et des modules
+  version: 1.0.0
+  contact:
+    name: Support
+    email: support@example.com
+
+servers:
+  - url: http://localhost:8080/Gestion_UE_VF_war_exploded/api
+    description: Serveur de développement
+
+paths:
+  /ue/list:
+    get:
+      summary: Récupérer toutes les unités d'enseignement
+      tags:
+        - Unités d'enseignement
+      responses:
+        '200':
+          description: Liste des unités d'enseignement
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UniteEnseignement'
+
+  /ue/list/code/{code}:
+    get:
+      summary: Récupérer une UE par son code
+      tags:
+        - Unités d'enseignement
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Unité d'enseignement trouvée
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UniteEnseignement'
+
+  /ue/list/semestre/{semestre}:
+    get:
+      summary: Récupérer les UE d'un semestre
+      tags:
+        - Unités d'enseignement
+      parameters:
+        - name: semestre
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Liste des UE du semestre
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/UniteEnseignement'
+
+  /ue/add:
+    post:
+      summary: Ajouter une nouvelle UE
+      tags:
+        - Unités d'enseignement
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UniteEnseignement'
+      responses:
+        '201':
+          description: UE créée avec succès
+
+  /ue/list/update/{code}:
+    put:
+      summary: Mettre à jour une UE
+      tags:
+        - Unités d'enseignement
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UniteEnseignement'
+      responses:
+        '200':
+          description: UE mise à jour avec succès
+
+  /ue/list/{code}:
+    delete:
+      summary: Supprimer une UE
+      tags:
+        - Unités d'enseignement
+      parameters:
+        - name: code
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: UE supprimée avec succès
+
+  /Module/list:
+    get:
+      summary: Récupérer tous les modules
+      tags:
+        - Modules
+      responses:
+        '200':
+          description: Liste des modules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Module'
+
+  /Module/list/{matricule}:
+    get:
+      summary: Récupérer un module par son matricule
+      tags:
+        - Modules
+      parameters:
+        - name: matricule
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Module trouvé
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Module'
+    delete:
+      summary: Supprimer un module
+      tags:
+        - Modules
+      parameters:
+        - name: matricule
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Module supprimé avec succès
+
+  /Module/add:
+    post:
+      summary: Ajouter un nouveau module
+      tags:
+        - Modules
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Module'
+      responses:
+        '201':
+          description: Module créé avec succès
+
+  /Module/update/{matricule}:
+    put:
+      summary: Mettre à jour un module
+      tags:
+        - Modules
+      parameters:
+        - name: matricule
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Module'
+      responses:
+        '200':
+          description: Module mis à jour avec succès
+
+components:
+  schemas:
+    UniteEnseignement:
+      type: object
+      required:
+        - code
+        - domaine
+        - responsable
+        - credits
+        - semestre
+      properties:
+        code:
+          type: integer
+          example: 1
+        domaine:
+          type: string
+          example: Informatique
+        responsable:
+          type: string
+          example: Mme Maroua Douiri
+        credits:
+          type: integer
+          example: 6
+        semestre:
+          type: integer
+          example: 1
+
+    Module:
+      type: object
+      required:
+        - matricule
+        - nom
+        - coefficient
+        - volumeHoraire
+        - type
+      properties:
+        matricule:
+          type: string
+          example: M101
+        nom:
+          type: string
+          example: Algorithmique
+        coefficient:
+          type: integer
+          example: 3
+        volumeHoraire:
+          type: integer
+          example: 30
+        type:
+          type: string
+          enum:
+            - TRANSVERSAL
+            - PROFESSIONNEL
+            - RECHERCHE
+          example: PROFESSIONNEL
+        uniteEnseignement:
+          $ref: '#/components/schemas/UniteEnseignement'
